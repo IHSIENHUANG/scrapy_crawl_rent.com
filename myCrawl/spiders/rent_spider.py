@@ -3,6 +3,7 @@
 from scrapy.selector import Selector
 from myCrawl.items import FirstDemoItem 
 import scrapy
+import re
 class BaiduSpider(scrapy.Spider):
 	name = "rent"
 	allowed_domains = ["rent.com"]
@@ -26,17 +27,21 @@ class BaiduSpider(scrapy.Spider):
 			#	print (href)
 			#print(item['phone'])
 		print ("---start working for home plans") 
-		homes = response.xpath("//div[@class='floorplans clearfix']")#homes block
-		if homes == None:
-			print ("do not catch any house plan") 
-		for home in homes:
+		#homes = response.xpath("//div[@class='floorplans clearfix']")#homes block
+		homes_price = response.xpath("//div[@class='floorplan-item floorplan-rent hidden-xs hidden-sm']")#homes_price
+		homes_style = response.xpath("//div[@class='floorplan-item floorplan-bed-bath hidden-xs hidden-sm']")#homes_price
+		homes_size = response.xpath("//div[@class='floorplan-item floorplan-sqft hidden-xs hidden-sm']")#homes_price
+		#homes = homes.xpath(".//details[@class='floorplan-group expand'") 
+		for style,price,size in zip(homes_style,homes_price,homes_size):
 			print("hone round:",round_num)
-			datas =  (home.xpath(".//text()").extract())
-			for data in datas:
-				print(data)
-			plans = home.xpath(".//details[@class='floorplan-group expand']/text()").extract()
-			for plan in plans:
-				print("number of plans")
-				print(plan)
+			round_num+-1
+			data_style =  (style.xpath(".//text()").extract())
+			data_price =  (price.xpath(".//text()").extract())
+			data_size =  (size.xpath(".//text()").extract())[0].replace('\xa0',"")
+			print(data_style,data_price,data_size)
+			#for data in datas:
+			#	print(data)
+				#if re.search( "Studio",data):
+				#	print ("\nreg exp:",data,end=" ")
 		print ("---end working for home plans")
 		yield item		
