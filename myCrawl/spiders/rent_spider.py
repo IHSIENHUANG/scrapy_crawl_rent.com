@@ -12,8 +12,18 @@ class BaiduSpider(scrapy.Spider):
 	def parse(self,response):
 		item = FirstDemoItem()
 		item['title'] = response.xpath('/html/head/title/text()').extract()
-		#item['phone'] = response.xpath("//div[@class='pdp-heading-meta']/text())").extract()
 		sel = Selector(response)
+		#This part for split the location of the house
+		locations = response.xpath("//div[@class='pdp-heading-address']")
+		for index,addr in enumerate(locations):
+			print("number of addr: ",index)
+			item['streetaddr'] = addr.xpath(".//span[@itemprop='streetAddress']/text()").extract()
+			item['city'] = addr.xpath(".//span[@itemprop='addressLocality']/text()").extract()
+			item['state'] = addr.xpath(".//span[@itemprop='addressRegion']/text()").extract()
+			item['zipcode'] = addr.xpath(".//span[@itemprop='postalCode']/text()").extract()
+			#print(streetaddr,city,state,zipcode)
+		
+		#This part for get basic inoformation of the hosue
 		divs = sel.xpath("//div[@class='pdp-heading-meta']") # basic information block
 		round_num = 0    
 		for div in divs:
@@ -23,25 +33,20 @@ class BaiduSpider(scrapy.Spider):
 			item['price'] = div.xpath(".//span[@class='pdp-heading-meta-rent bold']/text()").extract()    
 			item['beds']  = div.xpath(".//span[@class='pdp-heading-meta-beds']/text()").extract()   
 			item['pet'] = div.xpath(".//span[@class='pdp-heading-meta-pets']/text()").extract()    
-			#for href in  div.xpath(".//span[@class='pdp-heading-meta-phone hidden-xs']/a/@href").extract(): 
-			#	print (href)
-			#print(item['phone'])
+		#This part for getting all the floor plan
 		print ("---start working for home plans") 
 		#homes = response.xpath("//div[@class='floorplans clearfix']")#homes block
 		homes_price = response.xpath("//div[@class='floorplan-item floorplan-rent hidden-xs hidden-sm']")#homes_price
-		homes_style = response.xpath("//div[@class='floorplan-item floorplan-bed-bath hidden-xs hidden-sm']")#homes_price
-		homes_size = response.xpath("//div[@class='floorplan-item floorplan-sqft hidden-xs hidden-sm']")#homes_price
-		#homes = homes.xpath(".//details[@class='floorplan-group expand'") 
+		homes_style = response.xpath("//div[@class='floorplan-item floorplan-bed-bath hidden-xs hidden-sm']")#?B?B
+		homes_size = response.xpath("//div[@class='floorplan-item floorplan-sqft hidden-xs hidden-sm']")#sqft
+		res = ""
 		for style,price,size in zip(homes_style,homes_price,homes_size):
-			print("hone round:",round_num)
 			round_num+-1
-			data_style =  (style.xpath(".//text()").extract())
-			data_price =  (price.xpath(".//text()").extract())
+			data_style =  (style.xpath(".//text()").extract())[0]
+			data_price =  (price.xpath(".//text()").extract())[0]
 			data_size =  (size.xpath(".//text()").extract())[0].replace('\xa0',"")
-			print(data_style,data_price,data_size)
-			#for data in datas:
-			#	print(data)
-				#if re.search( "Studio",data):
-				#	print ("\nreg exp:",data,end=" ")
+			res =res + data_style+" "+data_price+ " "+data_size +" | "
+		item['house_plan']  = res
 		print ("---end working for home plans")
+		#This part for some details
 		yield item		
