@@ -10,7 +10,12 @@ class MycrawlPipeline(object):
 	def process_item(self, item, spider):
 		#return item
 		print(item['title'])
+		print(item['streetaddr'])
+		print(item['city'])
+		print(item['state'])
+		print(item['zipcode'])
 		print(item['phone'])
 		print(item['price'])
 		print(item['beds'])
 		print(item['pet'])
+		print(item['house_plan'])

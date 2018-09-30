@@ -13,10 +13,15 @@ class FirstDemoItem(Item):
     #description = Field()
     #url = Field()
 	title = Field()
+	streetaddr = Field()
+	city = Field()
+	state = Field()
+	zipcode = Field()
 	phone = Field()
 	price = Field()
 	pet = Field()
 	beds = Field()
+	house_plan = Field()
 class MycrawlItem(scrapy.Item):
     # define the fields for your item here like:
     # name = scrapy.Field()
