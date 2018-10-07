@@ -48,5 +48,20 @@ class BaiduSpider(scrapy.Spider):
 			res =res + data_style+" "+data_price+ " "+data_size +" | "
 		item['house_plan']  = res
 		print ("---end working for home plans")
-		#This part for some details
+		parking_info = response.xpath("//div[@class='amenity-grid clearfix']")
+		for index,park in enumerate(parking_info):
+			print("index",index)
+			if index ==0:
+				item['Kitchen'] = park.xpath(".//span[@class='sprite-text']/text()").extract()
+			elif index ==1:
+				item['Laundry'] = park.xpath(".//span[@class='sprite-text']/text()").extract()
+			elif index ==2:
+				item['Parking'] = park.xpath(".//span[@class='sprite-text']/text()").extract()
+			elif index ==3:
+				item['Pets'] = park.xpath(".//span[@class='sprite-text']/text()").extract()
+	
+			elif index ==4:
+				item['Features'] = park.xpath(".//span[@class='sprite-text']/text()").extract()
+			elif index ==5:
+				item['Community'] = park.xpath(".//span[@class='sprite-text']/text()").extract()
 		yield item		
