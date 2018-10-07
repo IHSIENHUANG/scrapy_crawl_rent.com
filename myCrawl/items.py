@@ -22,6 +22,13 @@ class FirstDemoItem(Item):
 	pet = Field()
 	beds = Field()
 	house_plan = Field()
+	Parking = Field()
+	Pets = Field()
+	Kitchen = Field()
+	Laundry = Field()
+	Features = Field()
+	Community = Field()
+	Additional = Field()
 class MycrawlItem(scrapy.Item):
     # define the fields for your item here like:
     # name = scrapy.Field()

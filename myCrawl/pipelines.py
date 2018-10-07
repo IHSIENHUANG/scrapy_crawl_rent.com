@@ -19,3 +19,10 @@ class MycrawlPipeline(object):
 		print(item['beds'])
 		print(item['pet'])
 		print(item['house_plan'])
+
+		print(item['Kitchen'])
+		print(item['Laundry'])
+		print(item['Parking'])
+		print(item['Pets'])
+		print(item['Features'])
+		print(item['Community'])
