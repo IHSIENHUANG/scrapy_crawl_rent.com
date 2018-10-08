@@ -9,6 +9,7 @@
 class MycrawlPipeline(object):
 	def process_item(self, item, spider):
 		#return item
+		'''
 		print(item['title'])
 		print(item['streetaddr'])
 		print(item['city'])
@@ -26,3 +27,5 @@ class MycrawlPipeline(object):
 		print(item['Pets'])
 		print(item['Features'])
 		print(item['Community'])
+		'''
+		return item

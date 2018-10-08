@@ -29,6 +29,8 @@ class FirstDemoItem(Item):
 	Features = Field()
 	Community = Field()
 	Additional = Field()
+	url_from = Field()
+	url_to = Field()
 class MycrawlItem(scrapy.Item):
     # define the fields for your item here like:
     # name = scrapy.Field()
