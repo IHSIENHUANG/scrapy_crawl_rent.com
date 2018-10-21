@@ -31,6 +31,9 @@ class FirstDemoItem(Item):
 	Additional = Field()
 	url_from = Field()
 	url_to = Field()
+class CrawlCityItem(Item):
+	cityname = Field()
+	state = Field()
 class MycrawlItem(scrapy.Item):
     # define the fields for your item here like:
     # name = scrapy.Field()
