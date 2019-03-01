@@ -17,7 +17,7 @@ class FirstDemoItem(Item):
 	city = Field()
 	state = Field()
 	zipcode = Field()
-	phone = Field()
+	#phone = Field()
 	price = Field()
 	pet = Field()
 	beds = Field()
@@ -30,7 +30,7 @@ class FirstDemoItem(Item):
 	Community = Field()
 	Additional = Field()
 	url_from = Field()
-	url_to = Field()
+	#url_to = Field()
 class CrawlCityItem(Item):
 	cityname = Field()
 	state = Field()
